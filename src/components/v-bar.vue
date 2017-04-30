@@ -258,29 +258,7 @@ export default {
             return internalSize
         },
         getCoordinates (e, axis) {
-            let coordinate,
-                sizeWrapper,
-                sizeBar,
-                sizeContainer,
-                offsetContainer,
-                clientDirection
-
-            if (axis === 'X') {
-                sizeWrapper = this.wrapperObj.scrollWidth
-                sizeBar = this.bars.horizontal.size
-                sizeContainer = this.container.scrollWidth
-                offsetContainer = this.container.elm.offsetLeft
-                clientDirection = e.clientX
-            } else if (axis === 'Y') {
-                sizeWrapper = this.wrapperObj.scrollHeight
-                sizeBar = this.bars.vertical.size
-                sizeContainer = this.container.scrollHeight
-                offsetContainer = this.container.elm.offsetTop
-                clientDirection = e.clientY
-            }
-            coordinate = ((sizeWrapper - sizeContainer) * (clientDirection - offsetContainer)) / (sizeContainer - sizeBar)
-
-            return coordinate
+            return calcs.getCoordinates(e, this.wrapperObj, this.container, this.bars, axis)
         },
         startDragY (e) {
             e.preventDefault()
@@ -348,8 +326,6 @@ export default {
 
             this.bars.horizontal.size = calcs.getHorizontalSize(this.wrapperObj, this.container)
             this.bars.vertical.size = calcs.getVerticalSize(this.wrapperObj, this.container)
-
-            console.log(this.bars.horizontal.size, this.bars.vertical.size)
         }
     },
     props: ['wrapper', 'vBar', 'vBarInternal', 'hBar', 'hBarInternal']

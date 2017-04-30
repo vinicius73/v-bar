@@ -1,3 +1,5 @@
+import getCoordinates from './get-coordinates'
+
 const canShowBar = (wrapperValue, containerValue) => {
         return (wrapperValue - containerValue) > 24 && (wrapperValue - containerValue) !== 0
     },
@@ -13,4 +15,4 @@ const canShowBar = (wrapperValue, containerValue) => {
         : 0
     }
 
-export { getHorizontalSize, getVerticalSize }
+export { getHorizontalSize, getVerticalSize, getCoordinates }
