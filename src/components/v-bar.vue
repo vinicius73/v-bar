@@ -162,19 +162,19 @@ export default {
     },
     computed: {
         propWrapperSize () {
-            return this.wrapper ? this.wrapper : ''
+            return this.wrapper || ''
         },
         propBarVertical () {
-            return this.vBar ? this.vBar : ''
+            return this.vBar || ''
         },
         propBarInternalVertical () {
-            return this.vBarInternal ? this.vBarInternal : ''
+            return this.vBarInternal || ''
         },
         propBarHorizontal () {
-            return this.hBar ? this.hBar : ''
+            return this.hBar || ''
         },
         propBarInternalHorizontal () {
-            return this.hBarInternal ? this.hBarInternal : ''
+            return this.hBarInternal || ''
         },
         barSizeVertical () {
             if (this.bars.horizontal.size && this.bars.vertical.size) {
@@ -182,6 +182,8 @@ export default {
                     height: 'calc(100% - 16px)'
                 }
             }
+
+            return {}
         },
         barSizeHorizontal () {
             if (this.bars.horizontal.size && this.bars.vertical.size) {
@@ -191,28 +193,31 @@ export default {
             }
         },
         barInternalVertical () {
-            let barTop = this.getBarInternalSize('Y')
+            const barTop = this.getBarInternalSize('Y')
 
             return {
-                height: this.bars.vertical.size + 'px',
-                top: barTop + 'px'
+                height: `${this.bars.vertical.size}px`,
+                top: `${barTop}px`
             }
         },
         barInternalHorizontal () {
-            let barLeft = this.getBarInternalSize('X')
+            const barLeft = this.getBarInternalSize('X')
 
             return {
-                width: this.bars.horizontal.size + 'px',
-                left: barLeft + 'px'
+                width: `${this.bars.horizontal.size}px`,
+                left: `${barLeft}px`
             }
         },
         validationScrolls () {
             if (!this.bars.horizontal.size) {
                 return 'overflowX: hidden'
             }
+
             if (!this.bars.vertical.size) {
                 return 'overflowY: hidden'
             }
+
+            return ''
         }
     },
     methods: {
