@@ -109,6 +109,7 @@
 // **************************************************************************************** //
 
 import { addResizeListener, removeResizeListener } from 'detect-resize'
+import * as calcs from './calcs'
 
 export default {
     data: () => ({
@@ -328,29 +329,27 @@ export default {
             }
         },
         getSizes () {
+            const wrapperRef = this.$refs.wrapperRef,
+                container = this.$refs.container
+
             this.wrapperObj = {
-                elm: this.$refs.wrapperRef,
-                scrollHeight: this.$refs.wrapperRef.scrollHeight,
-                scrollWidth: this.$refs.wrapperRef.scrollWidth,
-                scrollLeft: this.$refs.wrapperRef.scrollLeft,
-                scrollTop: this.$refs.wrapperRef.scrollTop
+                elm: wrapperRef,
+                scrollHeight: wrapperRef.scrollHeight,
+                scrollWidth: wrapperRef.scrollWidth,
+                scrollLeft: wrapperRef.scrollLeft,
+                scrollTop: wrapperRef.scrollTop
             }
 
             this.container = {
-                elm: this.$refs.container,
-                scrollHeight: this.$refs.container.scrollHeight,
-                scrollWidth: this.$refs.container.scrollWidth
+                elm: container,
+                scrollHeight: container.scrollHeight,
+                scrollWidth: container.scrollWidth
             }
 
-            this.bars.horizontal.size = this.wrapperObj.scrollWidth - this.container.scrollWidth > 24 &&
-                this.wrapperObj.scrollWidth - this.container.scrollWidth !== 0
-                ? (this.container.scrollWidth / this.wrapperObj.scrollWidth) * this.container.scrollWidth
-                : 0
+            this.bars.horizontal.size = calcs.getHorizontalSize(this.wrapperObj, this.container)
+            this.bars.vertical.size = calcs.getVerticalSize(this.wrapperObj, this.container)
 
-            this.bars.vertical.size = this.wrapperObj.scrollHeight - this.container.scrollHeight > 24 &&
-                this.wrapperObj.scrollHeight - this.container.scrollHeight !== 0
-                ? (this.container.scrollHeight / this.wrapperObj.scrollHeight) * this.container.scrollHeight
-                : 0
+            console.log(this.bars.horizontal.size, this.bars.vertical.size)
         }
     },
     props: ['wrapper', 'vBar', 'vBarInternal', 'hBar', 'hBarInternal']
